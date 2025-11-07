@@ -49,7 +49,7 @@ export default function RegisterPage() {
 
       <p className='mt-3 link-opacity-25-hover'>
         Already have an account?{' '}
-        <a href='/login' className='link-opacity-25-hover bs-success-rgb'>
+        <a href='/login' className='link-opacity-25-hover'>
           Login
         </a>
       </p>
