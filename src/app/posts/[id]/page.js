@@ -22,7 +22,7 @@ export default async function PostView({ params }) {
           ) : (
             <p className='card-text'>No content available.</p>
           )}
-          <Link href='/posts' className='text-blue-500 hover:underline'>
+          <Link href='/' className='text-blue-500 hover:underline'>
             &larr; Back to Posts
           </Link>
         </div>
