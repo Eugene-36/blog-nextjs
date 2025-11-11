@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
+import { signOut } from 'next-auth/react';
 
 const NavItems = () => {
   return (
@@ -18,6 +19,16 @@ const NavItems = () => {
         <Nav.Item>
           <Nav.Link href='register' eventKey='link-2'>
             Register
+          </Nav.Link>
+        </Nav.Item>
+
+        <Nav.Item>
+          <Nav.Link
+            href='#'
+            eventKey='link-3'
+            onClick={() => signOut({ redirectTo: '/login' })}
+          >
+            Log Out
           </Nav.Link>
         </Nav.Item>
       </Nav>

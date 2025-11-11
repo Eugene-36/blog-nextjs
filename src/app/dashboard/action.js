@@ -6,8 +6,7 @@ import { redirect } from 'next/navigation';
 export default async function deletePost(formData) {
   const session = await auth();
   if (!session?.user) throw new Error('Unauthorized');
-
-  const postId = String(formData.get('postId') || '');
+  const postId = String(formData.get('id') || '');
   if (!postId) throw new Error('Post ID is required');
   const me = await prisma.user.findUnique({
     where: { email: session.user.email },

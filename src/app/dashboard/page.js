@@ -1,7 +1,7 @@
 import deletePost from './action';
 import { auth } from '@/auth';
 import prisma from '@/lib/prisma';
-import { redirect } from 'next/dist/server/api-utils';
+import { redirect } from 'next/navigation';
 import Link from 'next/link';
 
 export default async function DashboardPage() {
