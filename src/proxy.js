@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
 export async function proxy(request) {
   const protectedRoutes = ['/dashboard', '/posts/new'];
   const pathname = request.nextUrl.pathname;
@@ -18,8 +17,5 @@ export async function proxy(request) {
   return NextResponse.next();
 }
 export const config = {
-  matcher: [
-    '/dashboard/:path*', // защищаем /dashboard и всё внутри
-    '/posts/new', // защищаем форму создания поста
-  ],
+  matcher: ['/dashboard/:path*', '/posts/new'],
 };
