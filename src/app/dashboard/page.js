@@ -30,27 +30,33 @@ export default async function DashboardPage() {
       {!posts.length && <p>You have no posts yet.</p>}
 
       <ul className='list-group'>
-        {posts.map((p) => (
+        {posts.map(({ id, title, createdAt }) => (
           <li
-            key={p.id}
+            key={id}
             className='list-group-item d-flex justify-content-between align-items-center gap-2'
           >
             <div className='me-auto'>
               <strong>
-                <Link href={`/posts/${p.id}`}>{p.title}</Link>
+                <Link href={`/posts/${id}`}>{title}</Link>
               </strong>
               <div className='small text-muted'>
-                {new Date(p.createdAt).toLocaleString()}
+                {new Date(createdAt).toLocaleString()}
               </div>
             </div>
 
             {/* позже добавим edit */}
             <form action={deletePost} method='post'>
-              <input type='hidden' name='id' value={p.id} />
+              <input type='hidden' name='id' value={id} />
               <button className='btn btn-outline-danger btn-sm' type='submit'>
                 Delete
               </button>
             </form>
+            <Link
+              href={`/posts/${id}/edit`}
+              className='btn btn-outline-secondary btn-sm'
+            >
+              Edit
+            </Link>
           </li>
         ))}
       </ul>
