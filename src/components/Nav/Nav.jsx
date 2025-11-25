@@ -22,6 +22,11 @@ const NavItems = () => {
               Register
             </Nav.Link>
           </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href='/bookmarks' eventKey='link-3'>
+              Bookmarks
+            </Nav.Link>
+          </Nav.Item>
 
           <Nav.Item className='ms-auto'>
             <button type='button' className='btn btn-danger'>

@@ -14,17 +14,31 @@ export default async function EditView({ params }) {
   });
   const post = await prisma.post.findUnique({ where: { id } });
   if (!post || post.authorId !== me.id) redirect('/login');
+
   return (
     <main className='container'>
       <h1>Edit Post Page</h1>
       <form action={updatePost.bind(null, id)} method='post'>
         <div className='mb-3'>
           <label htmlFor='title'>Title</label>
-          <input type='text' name='title' className='form-control' required />
+          <input
+            type='text'
+            name='title'
+            className='form-control'
+            defaultValue={post.title}
+            required
+          />
         </div>
         <div className='mb-3'>
           <label htmlFor='content'>Content</label>
-          <input type='text' name='content' className='form-control' />
+          <textarea
+            defaultValue={post.content}
+            type='text'
+            name='content'
+            className='form-control'
+            id='content'
+            rows='3'
+          ></textarea>
         </div>
         <button className='btn btn-primary' type='submit'>
           Save
