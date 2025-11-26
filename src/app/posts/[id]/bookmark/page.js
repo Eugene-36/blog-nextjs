@@ -7,11 +7,11 @@ export default async function BookmarkPage() {
   const session = await auth();
   console.log('session.user.email', session?.user);
   if (!session?.user) redirect('/login');
-  const me = await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: { email: session.user.email },
   });
   const bookmarks = await prisma.bookmark.findMany({
-    where: { userId: me },
+    where: { userId: user.id },
     include: { post: { select: { id: true, title: true, createdAt: true } } },
     orderBy: { id: 'desc' },
   });
@@ -28,7 +28,7 @@ export default async function BookmarkPage() {
           >
             <Link href={`/posts/${el.post.id}`}>{el.post.title}</Link>
             <small className='text-muted'>
-              {new Date(b.post.createdAt).toLocaleString()}
+              {new Date(el.post.createdAt).toLocaleString()}
             </small>
           </li>
         ))}
