@@ -2,7 +2,7 @@ import prisma from '@/lib/prisma';
 import { auth } from '@/auth';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import toggleBookmark from './bookmark/action';
+import toggleBookmark from '../../bookmarks/action';
 
 export default async function PostView({ params }) {
   const { id } = await params;
