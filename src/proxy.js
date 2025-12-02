@@ -1,3 +1,4 @@
+'use server';
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 export async function proxy(request) {

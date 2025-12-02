@@ -1,6 +1,8 @@
+'use server';
 import { Geist, Geist_Mono } from 'next/font/google';
-import Link from 'next/link.js';
+import Link from 'next/link';
 import { auth } from '@/auth';
+import { logoutAction } from './logout/action';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // import './globals.css';
@@ -22,7 +24,7 @@ import NavItems from '../components/Nav/Nav.jsx';
 
 export default async function RootLayout({ children }) {
   const session = await auth();
-  console.log('layout session', session.user.name);
+  // console.log('layout session', session.user.name);
   return (
     <html lang='en'>
       <body>
@@ -35,11 +37,7 @@ export default async function RootLayout({ children }) {
                   <span className='ms-3 me-3'>Hello, {session.user.email}</span>
                   <Link href='/bookmarks'>Bookmarks</Link>
                   <Link href='/dashboard'>Dashboard</Link>
-                  <form
-                    // action='/api/auth/signout'
-                    method='post'
-                    className='ms-auto'
-                  >
+                  <form action={logoutAction} method='post' className='ms-auto'>
                     <button className='btn btn-danger ' type='submit'>
                       Logout
                     </button>
