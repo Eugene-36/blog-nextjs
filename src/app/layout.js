@@ -30,14 +30,20 @@ export default async function RootLayout({ children }) {
       <body>
         <header>
           <div className='container pt-3 pb-3'>
-            <nav>
-              <Link href='/'>Home</Link>
+            <nav className='d-flex align-items-center'>
+              <Link href='/' className='me-2'>
+                Home
+              </Link>
               {session?.user ? (
                 <>
-                  <span className='ms-3 me-3'>Hello, {session.user.email}</span>
-                  <Link href='/bookmarks'>Bookmarks</Link>
+                  <Link href='/bookmarks' className='me-2'>
+                    Bookmarks
+                  </Link>
                   <Link href='/dashboard'>Dashboard</Link>
-                  <form action={logoutAction} method='post' className='ms-auto'>
+                  <span className='ms-3 me-3 ms-auto'>
+                    Hello, {session.user.email}
+                  </span>
+                  <form action={logoutAction} method='post'>
                     <button className='btn btn-danger ' type='submit'>
                       Logout
                     </button>
@@ -56,7 +62,6 @@ export default async function RootLayout({ children }) {
             </nav>
           </div>
         </header>
-        {/* <NavItems /> */}
         {children}
       </body>
     </html>
