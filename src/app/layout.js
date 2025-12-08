@@ -43,7 +43,7 @@ export default async function RootLayout({ children }) {
                   <span className='ms-3 me-3 ms-auto'>
                     Hello, {session.user.email}
                   </span>
-                  <form action={logoutAction} method='post'>
+                  <form action={logoutAction}>
                     <button className='btn btn-danger ' type='submit'>
                       Logout
                     </button>

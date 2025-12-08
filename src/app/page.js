@@ -11,7 +11,6 @@ export default async function Home({ searchParams }) {
     ? {
         title: {
           contains: searchedWord,
-          lte: 'insensitive',
         },
       }
     : {};
