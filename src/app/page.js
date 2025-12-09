@@ -2,10 +2,17 @@ import prisma from '@/lib/prisma';
 import Link from 'next/link';
 export const dynamic = 'force-dynamic';
 import styles from './page.module.css';
+import { redirect } from 'next/navigation';
 
 export default async function Home({ searchParams }) {
-  const { q } = await searchParams;
+  const { q, page } = await searchParams;
   const searchedWord = (q || '').trim();
+  let currentPage = parseInt(page) || 1;
+  const paginationLimit = 5;
+  //
+  const handleEdgeCasesForPagination = () => redirect('/');
+  // Ensure currentPage is at least 1 and not NaN and not grater than totalPages
+  if (currentPage < 1 || isNaN(currentPage)) handleEdgeCasesForPagination();
 
   const where = searchedWord
     ? {
@@ -14,6 +21,24 @@ export default async function Home({ searchParams }) {
         },
       }
     : {};
+  const totalPosts = await prisma.post.count({ where });
+  const totalPages = Math.ceil(totalPosts / paginationLimit);
+  if (totalPages === 0) {
+    return 'There are no posts yet.'; // Or render a component indicating no posts are available
+  }
+
+  if (currentPage > totalPages) handleEdgeCasesForPagination();
+
+  const offset = (currentPage - 1) * paginationLimit;
+  const postsRetrievedForPagination = await prisma.post.findMany({
+    take: paginationLimit,
+    skip: offset,
+    where,
+  });
+  console.log('postsRetrievedForPagination', postsRetrievedForPagination);
+  console.log('paginationLimit', paginationLimit);
+  console.log('skip', offset);
+  console.log('where', where);
   const posts = await prisma.post.findMany({
     where,
     orderBy: { createdAt: 'desc' },
@@ -71,9 +96,55 @@ export default async function Home({ searchParams }) {
         </p>
       )}
       {!posts.length && <p>No posts found.</p>}
-      {!!posts.length && (
-        <ul className='list-group'>{handleUIrender(posts)}</ul>
+      {!!postsRetrievedForPagination.length && (
+        <ul className='list-group'>
+          {handleUIrender(postsRetrievedForPagination)}
+        </ul>
       )}
+      {/* PAGINATION */}
+      <span>
+        Page {currentPage} of {totalPages}
+      </span>
+      <nav aria-label='Page navigation example' className='mt-4'>
+        <ul className='pagination'>
+          <li className='page-item'>
+            {currentPage > 1 && (
+              <Link
+                className='page-link'
+                href={`/?page=${currentPage - 1}${
+                  searchedWord ? `&q=${searchedWord}` : ''
+                }`}
+                aria-label='Previous'
+              >
+                <span aria-hidden='true'>&laquo;</span>
+              </Link>
+            )}
+          </li>
+          <li className='page-item'>
+            <a className='page-link' href='#'>
+              {currentPage}
+            </a>
+          </li>
+          <li className='page-item'>
+            <a className='page-link' href='#'>
+              Pages {totalPages}
+            </a>
+          </li>
+          <li className='page-item'>
+            {currentPage < totalPages && (
+              <Link
+                className='page-link'
+                href={`/?page=${currentPage + 1}${
+                  searchedWord ? `&q=${searchedWord}` : ''
+                }`}
+                aria-label='Next'
+              >
+                <span aria-hidden='true'>&raquo;</span>
+              </Link>
+            )}
+          </li>
+        </ul>
+      </nav>
     </main>
   );
 }
