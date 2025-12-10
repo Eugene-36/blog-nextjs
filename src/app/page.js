@@ -12,8 +12,7 @@ export default async function Home({ searchParams }) {
   //
   const handleEdgeCasesForPagination = () => redirect('/');
   // Ensure currentPage is at least 1 and not NaN and not grater than totalPages
-  if (currentPage < 1 || isNaN(currentPage)) handleEdgeCasesForPagination();
-
+  if (currentPage < 1) handleEdgeCasesForPagination();
   const where = searchedWord
     ? {
         title: {
@@ -23,26 +22,25 @@ export default async function Home({ searchParams }) {
     : {};
   const totalPosts = await prisma.post.count({ where });
   const totalPages = Math.ceil(totalPosts / paginationLimit);
+
   if (totalPages === 0) {
-    return 'There are no posts yet.'; // Or render a component indicating no posts are available
+    return (
+      <main className='container'>
+        <h2 style={{ textAlign: 'center' }}>There are no posts yet.</h2>
+      </main>
+    );
   }
 
   if (currentPage > totalPages) handleEdgeCasesForPagination();
 
+  // Offset calculation how many posts to skip
   const offset = (currentPage - 1) * paginationLimit;
+
   const postsRetrievedForPagination = await prisma.post.findMany({
     take: paginationLimit,
     skip: offset,
     where,
-  });
-  console.log('postsRetrievedForPagination', postsRetrievedForPagination);
-  console.log('paginationLimit', paginationLimit);
-  console.log('skip', offset);
-  console.log('where', where);
-  const posts = await prisma.post.findMany({
-    where,
     orderBy: { createdAt: 'desc' },
-    select: { id: true, title: true, createdAt: true },
   });
 
   const handleUIrender = (dataObject) => {
@@ -91,21 +89,21 @@ export default async function Home({ searchParams }) {
       {!searchedWord && <p className='mb-3'>All Posts</p>}
       {searchedWord && (
         <p className='mb-3'>
-          Search results for <strong>{searchedWord}</strong> ({posts.length}{' '}
+          Search results for <strong>{searchedWord}</strong> ({totalPosts}{' '}
           found)
         </p>
       )}
-      {!posts.length && <p>No posts found.</p>}
+      {!totalPosts && <p>No posts found.</p>}
       {!!postsRetrievedForPagination.length && (
         <ul className='list-group'>
           {handleUIrender(postsRetrievedForPagination)}
         </ul>
       )}
       {/* PAGINATION */}
-      <span>
+      <span className='mt-3 d-block'>
         Page {currentPage} of {totalPages}
       </span>
-      <nav aria-label='Page navigation example' className='mt-4'>
+      <nav aria-label='Page navigation posts' className='mt-3'>
         <ul className='pagination'>
           <li className='page-item'>
             {currentPage > 1 && (
@@ -126,9 +124,9 @@ export default async function Home({ searchParams }) {
             </a>
           </li>
           <li className='page-item'>
-            <a className='page-link' href='#'>
-              Pages {totalPages}
-            </a>
+            <span className='page-link disabled'>
+              {currentPage} / {totalPages}
+            </span>
           </li>
           <li className='page-item'>
             {currentPage < totalPages && (
