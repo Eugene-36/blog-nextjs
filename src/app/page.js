@@ -42,7 +42,7 @@ export default async function Home({ searchParams }) {
     where,
     orderBy: { createdAt: 'desc' },
   });
-
+  console.log('postsRetrievedForPagination', postsRetrievedForPagination);
   const handleUIrender = (dataObject) => {
     return dataObject.map(({ id, title, createdAt }) => (
       <li

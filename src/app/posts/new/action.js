@@ -3,6 +3,8 @@
 import { auth } from '@/auth';
 import prisma from '@/lib/prisma';
 import { redirect } from 'next/navigation';
+import fs from 'fs';
+import path from 'path';
 
 export async function createPost(formData) {
   const session = await auth();
@@ -14,10 +16,40 @@ export async function createPost(formData) {
   if (!user) throw new Error('User not found');
   const title = String(formData.get('title') || '').trim();
   const content = String(formData.get('content') || '').trim();
+  const file = formData.get('image') || null;
+
+  let imageUrl = '';
+  if (file && file.size > 0) {
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    // 2. Convert your buffer into a Uint8Array
+    const contentImage = new Uint8Array(buffer);
+
+    const newPath = path.join(process.cwd(), 'public', 'uploads', file.name);
+
+    // await fs.writeFile(newPath, buffer);
+
+    fs.writeFile(newPath, contentImage, (err) => {
+      if (err) {
+        console.error(err);
+        // res.status(500).send('Internal Server Error');
+      }
+
+      // res.status(200).send('File uploaded successfully');
+    });
+    imageUrl = `${file.name}`;
+  }
+
+  console.log('imgNameUrl', imageUrl);
+  // console.log('newPath', newPath);
+  // console.log('title', title);
+  // console.log('content', content);
+
+  // ===========================WOrking result
   if (!title) throw new Error('Title is required');
 
   const post = await prisma.post.create({
-    data: { title, content, authorId: user.id, published: true },
+    data: { title, content, imageUrl, authorId: user.id, published: true },
   });
   redirect(`/posts/${post.id}`);
 }

@@ -2,6 +2,7 @@ import prisma from '@/lib/prisma';
 import { auth } from '@/auth';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import toggleBookmark from '../../bookmarks/action';
 
 export default async function PostView({ params }) {
@@ -52,16 +53,17 @@ export default async function PostView({ params }) {
         )}
 
         <article style={{ whiteSpace: 'pre-wrap' }}>{post.content}</article>
-        {/* <div className='card-body'>
-          {post.content ? (
-            <p className='card-text'>{post.content}</p>
-          ) : (
-            <p className='card-text'>No content available.</p>
-          )}
-          <Link href='/' className='text-blue-500 hover:underline'>
-            &larr; Back to Posts
-          </Link>
-        </div> */}
+        {console.log('post?.imageUrl', post?.imageUrl)}
+        {post.imageUrl ? (
+          <Image
+            src={`/uploads/${post?.imageUrl}`}
+            width={100}
+            height={100}
+            alt='Picture of the author'
+          />
+        ) : (
+          ''
+        )}
       </div>
     </main>
   );

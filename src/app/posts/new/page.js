@@ -7,8 +7,8 @@ export default function NewPostPage() {
       <h1 className='mb-4'>New Post</h1>
       <form
         action={createPost}
-        // method='post'
         className='max-w-xl mx-auto mt-10'
+        encType='multipart/form-data'
       >
         <div className='mb-3'>
           <label
@@ -37,6 +37,19 @@ export default function NewPostPage() {
             style={{ height: '200px' }}
             name='content'
           ></textarea>
+        </div>
+
+        <div className='mb-3'>
+          <label htmlFor='formFile' className='form-label'>
+            File input
+          </label>
+          <input
+            className='form-control'
+            type='file'
+            id='formFile'
+            name='image'
+            accept='image/png, image/jpeg, image/jpg'
+          />
         </div>
         <button type='submit' className='btn btn-primary'>
           Create Post
