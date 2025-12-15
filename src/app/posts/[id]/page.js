@@ -57,14 +57,14 @@ export default async function PostView({ params }) {
         <div className='text-center'>
           {post.imageUrl ? (
             <Image
-              src={`/uploads/${post?.imageUrl}`}
+              src={`${post?.imageUrl}`}
               width={250}
               height={250}
               style={{ objectFit: 'contain' }}
-              alt='Picture of the post'
+              alt={post.title}
             />
           ) : (
-            ''
+            <div className='text-muted'>No image</div>
           )}
         </div>
       </div>

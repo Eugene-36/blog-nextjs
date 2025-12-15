@@ -2,11 +2,13 @@
 import prisma from '@/lib/prisma';
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import path from 'path';
+import { v4 } from 'uuid';
 
 export default async function updatePost(id, formData) {
   const session = await auth();
+  const idImage = v4();
   if (!session?.user) throw new Error('Unauthorized');
 
   const me = await prisma.user.findUnique({
@@ -19,46 +21,63 @@ export default async function updatePost(id, formData) {
   const content = formData.get('content') || '';
   const file = formData.get('image') || '';
 
-  // console.log('imageUrl', imageUrl);
+  let imageUrl = null;
+  let baseName = '';
 
-  let imageUrl = '';
   if (file && file.size > 0) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     // 2. Convert your buffer into a Uint8Array
     const contentImage = new Uint8Array(buffer);
+    //if file exist create new path
+    baseName = `${idImage}${path.extname(file.name)}`;
 
-    const newPath = path.join(process.cwd(), 'public', 'uploads', file.name);
-    const oldPath = path.join(
-      process.cwd(),
-      'public',
-      'uploads',
-      post.imageUrl
-    );
-
-    fs.unlink(oldPath, function (err) {
-      if (err) throw err;
-      console.log('File deleted!');
-    });
-
-    fs.writeFile(newPath, contentImage, (err) => {
-      if (err) console.error(err);
-      console.log('File overwritten successfully!');
-    });
-    imageUrl = `${file.name}`;
+    const newPath = path.join(process.cwd(), 'public', 'uploads', baseName);
+    // Delete img from old path
+    if (baseName && post.imageUrl) {
+      const oldPath = path.join(process.cwd(), 'public', post.imageUrl);
+      await fs.unlink(oldPath, (err) => {
+        if (err) throw err;
+        console.log('File deleted!');
+      });
+    }
+    //If post does not have previously loaded img in DB
+    //and you want add new one
+    if (baseName && !post.imageUrl) {
+      const createNewImgForPost = path.join(
+        process.cwd(),
+        'public',
+        'uploads',
+        baseName
+      );
+      await fs.writeFile(createNewImgForPost, contentImage, (err) => {
+        if (err) console.error(err);
+        console.log('New file was created successfully!');
+      });
+      imageUrl = `/uploads/${baseName}`;
+    }
+    //When you have new img loaded and entry in DB we update
+    //file in folder and in DB
+    if (baseName && post.imageUrl) {
+      await fs.writeFile(newPath, contentImage, (err) => {
+        if (err) console.error(err);
+        console.log('File overwritten successfully!');
+      });
+      imageUrl = `/uploads/${baseName}`;
+    }
   }
-
-  // Working part
-  await prisma.post.update({
+  const isImageURLexist = imageUrl ? imageUrl : post.imageUrl;
+  const prismaObjectUpdate = {
     where: {
       id,
     },
     data: {
       title,
       content,
-      imageUrl,
+      imageUrl: isImageURLexist,
     },
-  });
-
+  };
+  // Working part
+  await prisma.post.update(prismaObjectUpdate);
   redirect(`/posts/${id}`);
 }
