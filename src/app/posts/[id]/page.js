@@ -54,16 +54,19 @@ export default async function PostView({ params }) {
 
         <article style={{ whiteSpace: 'pre-wrap' }}>{post.content}</article>
         {console.log('post?.imageUrl', post?.imageUrl)}
-        {post.imageUrl ? (
-          <Image
-            src={`/uploads/${post?.imageUrl}`}
-            width={100}
-            height={100}
-            alt='Picture of the author'
-          />
-        ) : (
-          ''
-        )}
+        <div className='text-center'>
+          {post.imageUrl ? (
+            <Image
+              src={`/uploads/${post?.imageUrl}`}
+              width={250}
+              height={250}
+              style={{ objectFit: 'contain' }}
+              alt='Picture of the post'
+            />
+          ) : (
+            ''
+          )}
+        </div>
       </div>
     </main>
   );

@@ -26,26 +26,12 @@ export async function createPost(formData) {
     const contentImage = new Uint8Array(buffer);
 
     const newPath = path.join(process.cwd(), 'public', 'uploads', file.name);
-
-    // await fs.writeFile(newPath, buffer);
-
     fs.writeFile(newPath, contentImage, (err) => {
-      if (err) {
-        console.error(err);
-        // res.status(500).send('Internal Server Error');
-      }
-
-      // res.status(200).send('File uploaded successfully');
+      if (err) console.error(err);
     });
     imageUrl = `${file.name}`;
   }
 
-  console.log('imgNameUrl', imageUrl);
-  // console.log('newPath', newPath);
-  // console.log('title', title);
-  // console.log('content', content);
-
-  // ===========================WOrking result
   if (!title) throw new Error('Title is required');
 
   const post = await prisma.post.create({

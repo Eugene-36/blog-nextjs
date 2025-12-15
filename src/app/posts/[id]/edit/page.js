@@ -40,6 +40,18 @@ export default async function EditView({ params }) {
             rows='3'
           ></textarea>
         </div>
+        <div className='mb-3'>
+          <label htmlFor='formFile' className='form-label'>
+            File input
+          </label>
+          <input
+            className='form-control'
+            type='file'
+            id='formFile'
+            name='image'
+            accept='image/png, image/jpeg, image/jpg'
+          />
+        </div>
         <button className='btn btn-primary' type='submit'>
           Save
         </button>
