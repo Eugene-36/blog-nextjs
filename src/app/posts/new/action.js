@@ -9,6 +9,7 @@ import { v4 } from 'uuid';
 
 export async function createPost(formData) {
   const session = await auth();
+  const idImage = v4();
   if (!session?.user?.email) throw new Error('Unauthorized');
 
   const user = await prisma.user.findUnique({
@@ -19,22 +20,21 @@ export async function createPost(formData) {
   const content = String(formData.get('content') || '').trim();
   const file = formData.get('image') || null;
 
-  let imageUrl = '';
+  let imageUrl = null;
   let baseName = '';
-  if (baseName) {
-    baseName = `${v4(file.name.split('.')[0])}${file.name.split('.')[1]}`;
-  }
+
   if (file && file.size > 0) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     // 2. Convert your buffer into a Uint8Array
     const contentImage = new Uint8Array(buffer);
-
+    //if file exist create new path
+    baseName = `${idImage}${path.extname(file.name)}`;
     const newPath = path.join(process.cwd(), 'public', 'uploads', baseName);
-    await fs.writeFile(newPath, contentImage, (err) => {
-      if (err) console.error(err);
-    });
-    imageUrl = `/uploads/${baseName}`;
+    await fs.writeFile(newPath, contentImage);
+    if (baseName) {
+      imageUrl = `/uploads/${baseName}`;
+    }
   }
 
   if (!title) throw new Error('Title is required');

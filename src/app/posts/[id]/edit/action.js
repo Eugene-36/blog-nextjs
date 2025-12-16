@@ -36,10 +36,7 @@ export default async function updatePost(id, formData) {
     // Delete img from old path
     if (baseName && post.imageUrl) {
       const oldPath = path.join(process.cwd(), 'public', post.imageUrl);
-      await fs.unlink(oldPath, (err) => {
-        if (err) throw err;
-        console.log('File deleted!');
-      });
+      await fs.unlink(oldPath);
     }
     //If post does not have previously loaded img in DB
     //and you want add new one
@@ -50,19 +47,13 @@ export default async function updatePost(id, formData) {
         'uploads',
         baseName
       );
-      await fs.writeFile(createNewImgForPost, contentImage, (err) => {
-        if (err) console.error(err);
-        console.log('New file was created successfully!');
-      });
+      await fs.writeFile(createNewImgForPost, contentImage);
       imageUrl = `/uploads/${baseName}`;
     }
     //When you have new img loaded and entry in DB we update
     //file in folder and in DB
     if (baseName && post.imageUrl) {
-      await fs.writeFile(newPath, contentImage, (err) => {
-        if (err) console.error(err);
-        console.log('File overwritten successfully!');
-      });
+      await fs.writeFile(newPath, contentImage);
       imageUrl = `/uploads/${baseName}`;
     }
   }
