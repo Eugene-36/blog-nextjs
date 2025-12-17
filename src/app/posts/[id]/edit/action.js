@@ -40,22 +40,22 @@ export default async function updatePost(id, formData) {
     }
     //If post does not have previously loaded img in DB
     //and you want add new one
-    if (baseName && !post.imageUrl) {
-      const createNewImgForPost = path.join(
-        process.cwd(),
-        'public',
-        'uploads',
-        baseName
-      );
-      await fs.writeFile(createNewImgForPost, contentImage);
-      imageUrl = `/uploads/${baseName}`;
-    }
+    // if (baseName && !post.imageUrl) {
+    //   const createNewImgForPost = path.join(
+    //     process.cwd(),
+    //     'public',
+    //     'uploads',
+    //     baseName
+    //   );
+    //   await fs.writeFile(createNewImgForPost, contentImage);
+    //   imageUrl = `/uploads/${baseName}`;
+    // }
     //When you have new img loaded and entry in DB we update
     //file in folder and in DB
-    if (baseName && post.imageUrl) {
-      await fs.writeFile(newPath, contentImage);
-      imageUrl = `/uploads/${baseName}`;
-    }
+    await fs.writeFile(newPath, contentImage);
+    imageUrl = `/uploads/${baseName}`;
+    // if (baseName && post.imageUrl) {
+    // }
   }
   const isImageURLexist = imageUrl ? imageUrl : post.imageUrl;
   const prismaObjectUpdate = {
