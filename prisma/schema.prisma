@@ -21,6 +21,7 @@ model Post{
   title     String
   content   String?
   imageUrl  String?
+  imagePublicId String?  
   authorId  String
   published Boolean  @default(false)
   author   User     @relation(fields: [authorId], references: [id])

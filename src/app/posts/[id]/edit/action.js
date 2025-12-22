@@ -29,33 +29,27 @@ export default async function updatePost(id, formData) {
     const buffer = Buffer.from(bytes);
     // 2. Convert your buffer into a Uint8Array
     const contentImage = new Uint8Array(buffer);
+
     //if file exist create new path
     baseName = `${idImage}${path.extname(file.name)}`;
 
     const newPath = path.join(process.cwd(), 'public', 'uploads', baseName);
     // Delete img from old path
-    if (baseName && post.imageUrl) {
-      const oldPath = path.join(process.cwd(), 'public', post.imageUrl);
-      await fs.unlink(oldPath);
+    if (post.imageUrl) {
+      try {
+        const oldPath = path.join(process.cwd(), 'public', post.imageUrl);
+        await fs.unlink(oldPath);
+      } catch (error) {
+        if (error.code === 'ENOENT') {
+          console.log('Error: File or directory not found (ENOENT)');
+        }
+        if (error.code !== 'ENOENT') throw error;
+      }
     }
-    //If post does not have previously loaded img in DB
-    //and you want add new one
-    // if (baseName && !post.imageUrl) {
-    //   const createNewImgForPost = path.join(
-    //     process.cwd(),
-    //     'public',
-    //     'uploads',
-    //     baseName
-    //   );
-    //   await fs.writeFile(createNewImgForPost, contentImage);
-    //   imageUrl = `/uploads/${baseName}`;
-    // }
     //When you have new img loaded and entry in DB we update
     //file in folder and in DB
     await fs.writeFile(newPath, contentImage);
     imageUrl = `/uploads/${baseName}`;
-    // if (baseName && post.imageUrl) {
-    // }
   }
   const isImageURLexist = imageUrl ? imageUrl : post.imageUrl;
   const prismaObjectUpdate = {
