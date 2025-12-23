@@ -9,6 +9,7 @@ generator client {
   provider = "prisma-client-js"
 }
 model User {
+  role      Role     @default(USER)
   id        String   @id @default(cuid())
   email     String   @unique
   password  String?
@@ -36,4 +37,9 @@ model Bookmark {
   user   User @relation(fields: [userId], references: [id])
   post   Post @relation(fields: [postId], references: [id])
   @@unique([userId, postId])
+}
+
+enum Role {
+  USER
+  ADMIN
 }

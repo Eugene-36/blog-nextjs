@@ -5,7 +5,6 @@ import { redirect } from 'next/navigation';
 
 export default async function BookmarkPage() {
   const session = await auth();
-  console.log('session.user.email', session?.user);
   if (!session?.user) redirect('/login');
   const user = await prisma.user.findUnique({
     where: { email: session.user.email },

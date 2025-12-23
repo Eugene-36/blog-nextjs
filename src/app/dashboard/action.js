@@ -2,11 +2,10 @@
 import prisma from '@/lib/prisma';
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import { promises as fs } from 'fs';
-import path from 'path';
 
 export default async function deletePost(formData) {
   const session = await auth();
+
   if (!session?.user) throw new Error('Unauthorized');
   const postId = String(formData.get('id') || '');
   if (!postId) throw new Error('Post ID is required');
@@ -19,16 +18,16 @@ export default async function deletePost(formData) {
   });
   if (!target || target.authorId !== me.id) throw new Error('Forbidden');
 
-  if (target.imageUrl) {
-    try {
-      const oldPath = path.join(process.cwd(), 'public', target.imageUrl);
-      await fs.unlink(oldPath);
-    } catch (error) {
-      if (error.code === 'ENOENT') {
-        console.log('Error: File or directory not found (ENOENT)');
-      }
-    }
-  }
+  // if (target.imageUrl) {
+  //   try {
+  //     const oldPath = path.join(process.cwd(), 'public', target.imageUrl);
+  //     await fs.unlink(oldPath);
+  //   } catch (error) {
+  //     if (error.code === 'ENOENT') {
+  //       console.log('Error: File or directory not found (ENOENT)');
+  //     }
+  //   }
+  // }
   await prisma.post.delete({
     where: { id: postId },
   });

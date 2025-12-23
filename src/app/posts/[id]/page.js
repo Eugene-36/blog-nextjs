@@ -53,7 +53,6 @@ export default async function PostView({ params }) {
         )}
 
         <article style={{ whiteSpace: 'pre-wrap' }}>{post.content}</article>
-        {console.log('post?.imageUrl', post?.imageUrl)}
         <div className='text-center'>
           {post.imageUrl ? (
             <Image
