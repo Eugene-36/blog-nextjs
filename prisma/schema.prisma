@@ -17,6 +17,8 @@ model User {
   bookmarks Bookmark[]
   createdAt DateTime @default(now())
 }
+
+
 model Post{
   id        String      @id @default(cuid())
   title     String
@@ -34,8 +36,8 @@ model Bookmark {
   id     String   @id @default(cuid())
   userId String
   postId String
-  user   User @relation(fields: [userId], references: [id])
-  post   Post @relation(fields: [postId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
   @@unique([userId, postId])
 }
 

@@ -7,6 +7,5 @@ export async function getCurrentUser() {
     where: { email: session.user.email },
   });
   if (!me) throw new Error('User not found');
-  console.log('me', me);
   return me;
 }
