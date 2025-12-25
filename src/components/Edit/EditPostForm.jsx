@@ -1,12 +1,10 @@
 'use client';
 import { useState } from 'react';
 import updatePost from '@/app/posts/[id]/edit/action';
-
 const EditPostForm = ({ id, post }) => {
   const [imgPreview, setImgPreview] = useState(
     post.imageUrl ? post.imageUrl : null
   );
-
   const handleFilePreview = (e) => {
     setImgPreview(URL.createObjectURL(e.target.files[0]));
   };

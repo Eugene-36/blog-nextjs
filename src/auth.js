@@ -21,9 +21,27 @@ export const {
         if (!user || !user.password) return null;
         const ok = await bcrypt.compare(creds.password, user.password);
         if (!ok) return null;
-        return { id: user.id, email: user.email, name: user.name };
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+        };
       },
     }),
   ],
   session: { strategy: 'jwt' },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user?.role) token.role = user.role;
+
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.role = token.role;
+      }
+      return session;
+    },
+  },
 });

@@ -2,9 +2,12 @@ import { auth } from '@/auth';
 import prisma from '@/lib/prisma';
 import { redirect } from 'next/navigation';
 import deletePost from './action';
+import { getCurrentUser } from '@/utils/roleChecker';
 
 export default async function AdminPage() {
   const session = await auth();
+  const me = await getCurrentUser();
+  if (me.role !== 'ADMIN') redirect('/login');
   if (!session?.user) redirect('/login');
 
   const posts = await prisma.post.findMany({

@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import Link from 'next/link';
 import { auth } from '@/auth';
 import { logoutAction } from './logout/action';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 // import './globals.css';
 import NavItems from '../components/Nav/Nav.jsx';
 // const geistSans = Geist({
@@ -24,7 +24,9 @@ import NavItems from '../components/Nav/Nav.jsx';
 
 export default async function RootLayout({ children }) {
   const session = await auth();
-  // console.log('layout session', session.user.name);
+  // const authOptionsDetails = await authOptions.callbacks.jwt();
+  // console.log('layout session', session);
+  console.log('session', session);
   return (
     <html lang='en'>
       <body>

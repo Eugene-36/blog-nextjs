@@ -8,7 +8,6 @@ import { getCurrentUser } from '@/utils/roleChecker';
 export default async function DashboardPage() {
   const session = await auth();
   const isAllowed = await getCurrentUser();
-  console.log('isAllowed', isAllowed);
 
   if (!session?.user) redirect('/login');
   // if (isAllowed?.role === 'GUEST') redirect('/login');

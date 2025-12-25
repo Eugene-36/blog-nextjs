@@ -8,7 +8,6 @@ export default async function AdminPage() {
 
   if (!session?.user) redirect('/login');
   const users = await prisma.user.findMany();
-  console.log('users', users);
 
   return (
     <main className='container'>
