@@ -33,15 +33,25 @@ export default async function RootLayout({ children }) {
         <header>
           <div className='container pt-3 pb-3'>
             <nav className='d-flex align-items-center'>
-              <Link href='/' className='me-2'>
-                Home
-              </Link>
+              <Link href='/'>Home</Link>
+              {session?.user?.role === 'ADMIN' && (
+                <>
+                  <Link className='ms-3' href='/admin/users'>
+                    Table Users
+                  </Link>
+                  <Link className='ms-3' href='/admin/posts'>
+                    Admin posts
+                  </Link>
+                </>
+              )}
               {session?.user ? (
                 <>
-                  <Link href='/bookmarks' className='me-2'>
+                  <Link href='/bookmarks' className='ms-3'>
                     Bookmarks
                   </Link>
-                  <Link href='/dashboard'>Dashboard</Link>
+                  <Link href='/dashboard' className='ms-3'>
+                    Dashboard
+                  </Link>
                   <span className='ms-3 me-3 ms-auto'>
                     Hello, {session.user.email}
                   </span>
