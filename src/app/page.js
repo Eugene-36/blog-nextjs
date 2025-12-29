@@ -3,6 +3,8 @@ import Link from 'next/link';
 export const dynamic = 'force-dynamic';
 import styles from './page.module.css';
 import { redirect } from 'next/navigation';
+import { pagination } from '@/utils/pagination';
+import Pagination from '@/components/Pagination/Pagination.jsx';
 
 export default async function Home({ searchParams }) {
   const { q, page } = await searchParams;
@@ -21,7 +23,12 @@ export default async function Home({ searchParams }) {
       }
     : {};
   const totalPosts = await prisma.post.count({ where });
-  const totalPages = Math.ceil(totalPosts / paginationLimit);
+  // Offset calculation how many posts to skip
+  const { totalPages, offset } = pagination(
+    currentPage,
+    paginationLimit,
+    totalPosts
+  );
 
   if (totalPages === 0) {
     return (
@@ -32,9 +39,6 @@ export default async function Home({ searchParams }) {
   }
 
   if (currentPage > totalPages) handleEdgeCasesForPagination();
-
-  // Offset calculation how many posts to skip
-  const offset = (currentPage - 1) * paginationLimit;
 
   const postsRetrievedForPagination = await prisma.post.findMany({
     take: paginationLimit,
@@ -99,49 +103,12 @@ export default async function Home({ searchParams }) {
         </ul>
       )}
       {/* PAGINATION */}
-      <span className='mt-3 d-block'>
-        Page {currentPage} of {totalPages}
-      </span>
-      <nav aria-label='Page navigation posts' className='mt-3'>
-        <ul className='pagination'>
-          <li className='page-item'>
-            {currentPage > 1 && (
-              <Link
-                className='page-link'
-                href={`/?page=${currentPage - 1}${
-                  searchedWord ? `&q=${searchedWord}` : ''
-                }`}
-                aria-label='Previous'
-              >
-                <span aria-hidden='true'>&laquo;</span>
-              </Link>
-            )}
-          </li>
-          <li className='page-item'>
-            <a className='page-link' href='#'>
-              {currentPage}
-            </a>
-          </li>
-          <li className='page-item'>
-            <span className='page-link disabled'>
-              {currentPage} / {totalPages}
-            </span>
-          </li>
-          <li className='page-item'>
-            {currentPage < totalPages && (
-              <Link
-                className='page-link'
-                href={`/?page=${currentPage + 1}${
-                  searchedWord ? `&q=${searchedWord}` : ''
-                }`}
-                aria-label='Next'
-              >
-                <span aria-hidden='true'>&raquo;</span>
-              </Link>
-            )}
-          </li>
-        </ul>
-      </nav>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        searchedWord={searchedWord}
+        basePath='/'
+      />
     </main>
   );
 }
