@@ -34,7 +34,8 @@ export const {
   callbacks: {
     async jwt({ token, user }) {
       if (user?.role) token.role = user.role;
-
+      console.log('token role exists', token.role);
+      console.log('token.sub', token.sub);
       if (token.sub && !token.role) {
         const dbUser = await prisma.user.findUnique({
           where: { id: token.sub },

@@ -2,7 +2,12 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 export async function proxy(request) {
-  const protectedRoutes = ['/dashboard', '/posts/new', '/admin'];
+  const protectedRoutes = [
+    '/dashboard',
+    '/posts/new',
+    '/admin',
+    '/admin/users',
+  ];
   const pathname = request.nextUrl.pathname;
   const needAuth = protectedRoutes.some((route) => pathname.startsWith(route));
 
@@ -20,5 +25,10 @@ export async function proxy(request) {
   return NextResponse.next();
 }
 export const config = {
-  matcher: ['/dashboard/:path*', '/posts/new', '/admin/:path*'],
+  matcher: [
+    '/dashboard/:path*',
+    '/posts/new',
+    '/admin/:path*',
+    '/admin/users/:path*',
+  ],
 };

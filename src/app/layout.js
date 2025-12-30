@@ -1,12 +1,9 @@
 'use server';
-import { Geist, Geist_Mono } from 'next/font/google';
-import Link from 'next/link';
 import { auth } from '@/auth';
 import { logoutAction } from './logout/action';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import './globals.css';
-import NavItems from '../components/Nav/Nav.jsx';
+import NavItems from '@/components/Nav/Nav.jsx';
 // const geistSans = Geist({
 //   variable: '--font-geist-sans',
 //   subsets: ['latin'],
@@ -24,55 +21,11 @@ import NavItems from '../components/Nav/Nav.jsx';
 
 export default async function RootLayout({ children }) {
   const session = await auth();
-  // const authOptionsDetails = await authOptions.callbacks.jwt();
-  // console.log('layout session', session);
-  console.log('session', session);
   return (
     <html lang='en'>
       <body>
         <header>
-          <div className='container pt-3 pb-3'>
-            <nav className='d-flex align-items-center'>
-              <Link href='/'>Home</Link>
-              {session?.user?.role === 'ADMIN' && (
-                <>
-                  <Link className='ms-3' href='/admin/users'>
-                    Table Users
-                  </Link>
-                  <Link className='ms-3' href='/admin/posts'>
-                    Admin posts
-                  </Link>
-                </>
-              )}
-              {session?.user ? (
-                <>
-                  <Link href='/bookmarks' className='ms-3'>
-                    Bookmarks
-                  </Link>
-                  <Link href='/dashboard' className='ms-3'>
-                    Dashboard
-                  </Link>
-                  <span className='ms-3 me-3 ms-auto'>
-                    Hello, {session.user.email}
-                  </span>
-                  <form action={logoutAction}>
-                    <button className='btn btn-danger ' type='submit'>
-                      Logout
-                    </button>
-                  </form>
-                </>
-              ) : (
-                <>
-                  <Link className='ms-3' href='/login'>
-                    Login
-                  </Link>
-                  <Link className='ms-3' href='/register'>
-                    Register
-                  </Link>
-                </>
-              )}
-            </nav>
-          </div>
+          <NavItems session={session} logoutAction={logoutAction} />
         </header>
         {children}
       </body>

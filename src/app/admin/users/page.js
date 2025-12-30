@@ -5,10 +5,12 @@ import updateUserRole from './action';
 
 export default async function AdminPage() {
   const session = await auth();
+  let adminCount = 0;
 
   if (!session?.user) redirect('/login');
+  if (session.user.role !== 'ADMIN') redirect('/login');
   const users = await prisma.user.findMany();
-
+  users.forEach((user) => user.role === 'ADMIN' && adminCount++);
   return (
     <main className='container'>
       <h1>Check admin panel</h1>
@@ -37,7 +39,11 @@ export default async function AdminPage() {
                   </form>
                   <form action={updateUserRole}>
                     <input type='hidden' name='id' value={id} />
-                    <button type='submit' className='btn btn-secondary'>
+                    <button
+                      type='submit'
+                      className='btn btn-secondary'
+                      disabled={adminCount === 1 && role === 'ADMIN'}
+                    >
                       Make user
                     </button>
                   </form>
