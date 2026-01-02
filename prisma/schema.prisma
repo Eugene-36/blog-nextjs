@@ -15,6 +15,7 @@ model User {
   password  String?
   posts     Post[]
   bookmarks Bookmark[]
+  permissionsVersion Int @default(1)
   createdAt DateTime @default(now())
 }
 

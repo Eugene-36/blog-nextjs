@@ -20,5 +20,5 @@ export default async function deletePost(formData) {
   await prisma.post.delete({
     where: { id: postId },
   });
-  redirect('/dashboard');
+  redirect('/dashboard?toast=post_deleted');
 }

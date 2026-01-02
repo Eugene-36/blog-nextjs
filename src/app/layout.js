@@ -4,6 +4,9 @@ import { logoutAction } from './logout/action';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavItems from '@/components/Nav/Nav.jsx';
+import ToastFromQuery from '@/components/ToastFromQuery/ToastFromQuery.jsx';
+import { Toaster } from 'react-hot-toast';
+
 // const geistSans = Geist({
 //   variable: '--font-geist-sans',
 //   subsets: ['latin'],
@@ -28,6 +31,8 @@ export default async function RootLayout({ children }) {
           <NavItems session={session} logoutAction={logoutAction} />
         </header>
         {children}
+        <ToastFromQuery />
+        <Toaster position='top-right' />
       </body>
     </html>
   );

@@ -26,6 +26,7 @@ export const {
           email: user.email,
           name: user.name,
           role: user.role,
+          permissionsVersion: user.permissionsVersion,
         };
       },
     }),
@@ -33,16 +34,18 @@ export const {
   session: { strategy: 'jwt' },
   callbacks: {
     async jwt({ token, user }) {
-      if (user?.role) token.role = user.role;
-      console.log('token role exists', token.role);
-      console.log('token.sub', token.sub);
-      if (token.sub && !token.role) {
+      if (user?.role) {
+        token.role = user.role;
+        token.pv = user.permissionsVersion;
+      }
+      if (token.sub) {
         const dbUser = await prisma.user.findUnique({
           where: { id: token.sub },
-          select: { role: true },
+          select: { role: true, permissionsVersion: true },
         });
-        if (dbUser) {
+        if (dbUser && dbUser.permissionsVersion !== token.pv) {
           token.role = dbUser.role;
+          token.pv = dbUser.permissionsVersion;
         }
       }
       return token;
@@ -50,6 +53,7 @@ export const {
     async session({ session, token }) {
       if (session.user) {
         session.user.role = token.role;
+        session.user.permissionsVersion = token.pv;
       }
       return session;
     },

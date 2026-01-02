@@ -17,10 +17,13 @@ export default async function updateUserRole(formData) {
   const target = await prisma.user.findUnique({
     where: { id: userId },
   });
-
+  console.log('target', me.permissionsVersion);
   await prisma.user.update({
     where: { id: userId },
-    data: { role: target.role === 'USER' ? 'ADMIN' : 'USER' },
+    data: {
+      role: target.role === 'USER' ? 'ADMIN' : 'USER',
+      permissionsVersion: me.permissionsVersion + 1,
+    },
   });
   redirect('/admin/users');
 }
