@@ -15,8 +15,23 @@ const ToastFromQuery = () => {
       case 'role_updated':
         notify.success('User role updated successfully');
         break;
+      case 'login_successful':
+        notify.success('Login successful');
+        break;
+      case 'logout_successful':
+        notify.success('Logout successful');
+        break;
+      case 'registration_successful':
+        notify.success('Registration successful');
+        break;
+      case 'post_created':
+        notify.success('Post created successfully');
+        break;
       case 'post_deleted':
         notify.error('Post deleted successfully');
+        break;
+      case 'post_updated':
+        notify.success('Post updated successfully');
         break;
       case 'forbidden':
         notify.loading('You do not have permission to perform this action');

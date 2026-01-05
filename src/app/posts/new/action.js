@@ -40,5 +40,5 @@ export async function createPost(formData) {
       published: true,
     },
   });
-  redirect(`/posts/${post.id}`);
+  redirect(`/posts/${post.id}?toast=post_created`);
 }

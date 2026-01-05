@@ -5,6 +5,7 @@ import styles from './page.module.css';
 import { redirect } from 'next/navigation';
 import { pagination } from '@/utils/pagination';
 import Pagination from '@/components/Pagination/Pagination.jsx';
+import { Gnews } from '@/components/Gnews/Gnews';
 
 export default async function Home({ searchParams }) {
   const { q, page } = await searchParams;
@@ -63,52 +64,59 @@ export default async function Home({ searchParams }) {
   };
   return (
     <main className='container'>
-      <div className='d-flex justify-content-between align-items-center mb-3'>
-        <h1 className='mb-0'>Posts </h1>
-        <Link href='/posts/new' className='btn btn-primary'>
-          New Post
-        </Link>
-      </div>
-      {searchedWord && (
-        <Link href='/' className='btn btn-link btn-sm ms-2'>
-          Clear
-        </Link>
-      )}
-
-      <form action='/' method='get'>
-        <div className='mb-3 d-flex'>
-          <input
-            name='q'
-            type='text'
-            className='form-control me-2'
-            defaultValue={searchedWord}
-            placeholder='Search posts...'
-          />
-          <button className='btn btn-primary' type='submit'>
-            Search
-          </button>
+      <div className='row'>
+        <div className='col-2 overflow-auto' style={{ maxHeight: '90vh' }}>
+          <Gnews />
         </div>
-      </form>
-      {!searchedWord && <p className='mb-3'>All Posts</p>}
-      {searchedWord && (
-        <p className='mb-3'>
-          Search results for <strong>{searchedWord}</strong> ({totalPosts}{' '}
-          found)
-        </p>
-      )}
-      {!totalPosts && <p>No posts found.</p>}
-      {!!postsRetrievedForPagination.length && (
-        <ul className='list-group'>
-          {handleUIrender(postsRetrievedForPagination)}
-        </ul>
-      )}
-      {/* PAGINATION */}
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        searchedWord={searchedWord}
-        basePath='/'
-      />
+        <div className='col'>
+          <div className='d-flex justify-content-between align-items-center mb-3'>
+            <h1 className='mb-0'>Posts </h1>
+            <Link href='/posts/new' className='btn btn-primary'>
+              New Post
+            </Link>
+          </div>
+          {searchedWord && (
+            <Link href='/' className='btn btn-link btn-sm ms-2'>
+              Clear
+            </Link>
+          )}
+
+          <form action='/' method='get'>
+            <div className='mb-3 d-flex'>
+              <input
+                name='q'
+                type='text'
+                className='form-control me-2'
+                defaultValue={searchedWord}
+                placeholder='Search posts...'
+              />
+              <button className='btn btn-primary' type='submit'>
+                Search
+              </button>
+            </div>
+          </form>
+          {!searchedWord && <p className='mb-3'>All Posts</p>}
+          {searchedWord && (
+            <p className='mb-3'>
+              Search results for <strong>{searchedWord}</strong> ({totalPosts}{' '}
+              found)
+            </p>
+          )}
+          {!totalPosts && <p>No posts found.</p>}
+          {!!postsRetrievedForPagination.length && (
+            <ul className='list-group'>
+              {handleUIrender(postsRetrievedForPagination)}
+            </ul>
+          )}
+          {/* PAGINATION */}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            searchedWord={searchedWord}
+            basePath='/'
+          />
+        </div>
+      </div>
     </main>
   );
 }

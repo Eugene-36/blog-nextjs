@@ -14,7 +14,7 @@ export default function LoginPage() {
       redirect: true,
       email,
       password,
-      callbackUrl: '/',
+      callbackUrl: '/?toast=login_successful',
     });
 
     if (result.error) setError('Invalid email or password');

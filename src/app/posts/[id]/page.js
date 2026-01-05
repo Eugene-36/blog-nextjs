@@ -1,6 +1,5 @@
 import prisma from '@/lib/prisma';
 import { auth } from '@/auth';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import toggleBookmark from '../../bookmarks/action';

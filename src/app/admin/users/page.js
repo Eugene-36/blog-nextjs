@@ -33,18 +33,12 @@ export default async function AdminPage() {
                 <div className='d-flex'>
                   <form action={updateUserRole}>
                     <input type='hidden' name='id' value={id} />
-                    <button type='submit' className='btn btn-primary me-2'>
-                      Make admin
-                    </button>
-                  </form>
-                  <form action={updateUserRole}>
-                    <input type='hidden' name='id' value={id} />
                     <button
                       type='submit'
-                      className='btn btn-secondary'
+                      className='btn btn-primary'
                       disabled={adminCount === 1 && role === 'ADMIN'}
                     >
-                      Make user
+                      {role === 'ADMIN' ? 'Make User' : 'Make Admin'}
                     </button>
                   </form>
                 </div>

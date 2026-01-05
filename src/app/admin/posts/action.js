@@ -7,7 +7,6 @@ import { getCurrentUser } from '@/utils/roleChecker';
 export default async function deletePost(formData) {
   const session = await auth();
   const me = await getCurrentUser();
-  console.log('me', me);
 
   if (!session?.user) throw new Error('Unauthorized');
   if (me.role !== 'ADMIN') throw new Error('Forbidden');
@@ -17,5 +16,5 @@ export default async function deletePost(formData) {
   await prisma.post?.delete({
     where: { id: postId },
   });
-  redirect('/admin/posts');
+  redirect('/admin/posts?toast=post_deleted');
 }

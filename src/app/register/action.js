@@ -17,5 +17,5 @@ export async function register(formData) {
     data: { email, password: hashed },
   });
 
-  redirect('/login');
+  redirect('/login?toast=registration_successful');
 }

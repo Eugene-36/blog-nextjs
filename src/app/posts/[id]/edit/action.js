@@ -46,5 +46,5 @@ export default async function updatePost(id, formData) {
   };
   // Working part
   await prisma.post.update(prismaObjectUpdate);
-  redirect(`/posts/${id}`);
+  redirect(`/posts/${id}?toast=post_updated`);
 }

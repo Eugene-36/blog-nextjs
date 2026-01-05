@@ -17,7 +17,6 @@ export default async function updateUserRole(formData) {
   const target = await prisma.user.findUnique({
     where: { id: userId },
   });
-  console.log('target', me.permissionsVersion);
   await prisma.user.update({
     where: { id: userId },
     data: {
@@ -25,5 +24,5 @@ export default async function updateUserRole(formData) {
       permissionsVersion: me.permissionsVersion + 1,
     },
   });
-  redirect('/admin/users');
+  redirect('/admin/users?toast=role_updated');
 }

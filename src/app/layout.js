@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavItems from '@/components/Nav/Nav.jsx';
 import ToastFromQuery from '@/components/ToastFromQuery/ToastFromQuery.jsx';
 import { Toaster } from 'react-hot-toast';
+// import { Gnews } from '@/components/Gnews/Gnews';
 
 // const geistSans = Geist({
 //   variable: '--font-geist-sans',
@@ -33,6 +34,7 @@ export default async function RootLayout({ children }) {
         {children}
         <ToastFromQuery />
         <Toaster position='top-right' />
+        {/* <Gnews /> */}
       </body>
     </html>
   );
