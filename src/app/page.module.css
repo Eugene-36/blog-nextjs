@@ -92,7 +92,16 @@ a.primary {
 a.secondary {
   border-color: var(--button-secondary-border);
 }
-
+.customMask {
+  -webkit-mask: linear-gradient(
+    180deg,
+    transparent,
+    #fff 0%,
+    #fff 80%,
+    transparent
+  );
+  mask: linear-gradient(180deg, transparent, #fff 0%, #fff 80%, transparent);
+}
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   a.primary:hover {

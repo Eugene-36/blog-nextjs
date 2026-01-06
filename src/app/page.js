@@ -65,7 +65,10 @@ export default async function Home({ searchParams }) {
   return (
     <main className='container'>
       <div className='row'>
-        <div className='col-2 overflow-auto' style={{ maxHeight: '90vh' }}>
+        <div
+          className={`${styles.customMask} col-2 overflow-auto`}
+          style={{ maxHeight: '90vh' }}
+        >
           <Gnews />
         </div>
         <div className='col'>
