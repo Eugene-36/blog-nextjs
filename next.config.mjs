@@ -10,7 +10,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'res.cloudinary.com',
+        hostname: '*',
         // Optional: add a specific pathname if you want to restrict to a certain cloud name
         // pathname: '/YOUR_CLOUD_NAME/**',
       },
