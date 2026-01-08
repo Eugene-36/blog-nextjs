@@ -21,17 +21,14 @@ export function Gnews() {
       {articles?.length > 0 &&
         articles.map(({ image, title, url, id }) => (
           <div key={id} className='card' style={{ marginBottom: '1rem' }}>
-            {/* <img
-              className='card-img-top'
-              src={image ? image : '/image-not-found.png'}
-              alt='Card image cap'
-            /> */}
             <Image
               width={120}
               height={80}
               className='card-img-top'
               src={image ? image : '/image-not-found.png'}
               alt='Card image cap'
+              style={{ width: 'auto', height: 'auto' }}
+              placeholder='empty'
             />
 
             <div className='card-body p-1'>
