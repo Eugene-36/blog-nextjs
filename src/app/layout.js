@@ -26,7 +26,7 @@ import { Toaster } from 'react-hot-toast';
 export default async function RootLayout({ children }) {
   const session = await auth();
   return (
-    <html lang='en'>
+    <html lang='en' data-scroll-behavior='smooth'>
       <body>
         <header>
           <NavItems session={session} logoutAction={logoutAction} />
