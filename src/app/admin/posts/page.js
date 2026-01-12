@@ -48,7 +48,11 @@ export default async function AdminPage({ searchParams }) {
     <main className='container'>
       <h1>All posts</h1>
 
-      <AdminPosts deletePost={deletePost} posts={postsRetrievedForPagination} />
+      <AdminPosts
+        deletePost={deletePost}
+        posts={postsRetrievedForPagination}
+        currentPage={currentPage}
+      />
 
       <Pagination
         currentPage={currentPage}
