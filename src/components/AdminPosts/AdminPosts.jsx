@@ -7,10 +7,7 @@ export function AdminPosts({ posts, deletePost, currentPage }) {
   const swapy = useRef(null);
   const container = useRef(null);
 
-  // console.log('posts in AdminPosts', posts);
   useEffect(() => {
-    console.log('posts changed useEffect triggered', posts);
-    // If container element is loaded
     if (!posts || posts.length === 0) return;
     let savedOrder = JSON.parse(localStorage.getItem(currentPage) || '[]');
 
@@ -20,47 +17,42 @@ export function AdminPosts({ posts, deletePost, currentPage }) {
     let currentOrder = JSON.parse(localStorage.getItem(currentPage) || '[]');
 
     if (currentOrder.length > 0) {
+      console.log('Setting postsForUI from localStorage order');
       setPostsForUI(() => {
         return currentOrder
           .map((id) => posts.find((post) => post.id === id))
           .filter((post) => post !== undefined);
       });
     }
-
+  }, [currentPage, posts]);
+  useEffect(() => {
     if (container.current) {
-      swapy.current = createSwapy(container.current);
-      console.log('Swapy instance created:', container.current, swapy.current);
-
-      swapy.current.onSwapEnd((event) => {
-        localStorage.setItem(
-          currentPage,
-          JSON.stringify(event.slotItemMap.asArray.map((item) => item.item))
-        );
-        setPostsForUI(
-          localStorage.getItem(currentPage)
-            ? JSON.parse(localStorage.getItem(currentPage)).map((id) =>
-                posts.find((post) => post.id === id)
-              )
-            : posts
-        );
-      });
+      if (postsForUI.length === posts.length) {
+        swapy.current = createSwapy(container.current);
+        swapy.current.onSwapEnd((event) => {
+          let newOrders = event.slotItemMap.asArray.map((item) => item.item);
+          let newPostsForUI = newOrders
+            .map((id) => posts.find((post) => post.id === id))
+            .filter((post) => post !== undefined);
+          // setPostsForUI(newPostsForUI);
+          localStorage.setItem(currentPage, JSON.stringify(newOrders));
+        });
+      }
     }
-
     return () => {
-      // Destroy the swapy instance on component destroy
       swapy.current?.destroy();
     };
-  }, [currentPage, posts]);
+  });
+  console.log('Rendering AdminPosts', postsForUI);
   return (
     <div className='container'>
-      <ul className='list-group' ref={container}>
+      <div className='list-group' ref={container}>
         {postsForUI.map(({ id, title }) => (
-          <div data-swapy-slot={id} key={id}>
+          <ul data-swapy-slot={id} key={id}>
             <li
               key={id}
               className='list-group-item d-flex justify-content-between align-items-center'
               data-swapy-item={id}
-              onClick={() => 'click'}
             >
               <strong>{title}</strong>
               <form action={deletePost}>
@@ -68,9 +60,9 @@ export function AdminPosts({ posts, deletePost, currentPage }) {
                 <button className='btn btn-danger'>Delete</button>
               </form>
             </li>
-          </div>
+          </ul>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
