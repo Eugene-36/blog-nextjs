@@ -34,7 +34,6 @@ export function AdminPosts({ posts, deletePost, currentPage }) {
           let newPostsForUI = newOrders
             .map((id) => posts.find((post) => post.id === id))
             .filter((post) => post !== undefined);
-          // setPostsForUI(newPostsForUI);
           localStorage.setItem(currentPage, JSON.stringify(newOrders));
         });
       }
@@ -43,12 +42,11 @@ export function AdminPosts({ posts, deletePost, currentPage }) {
       swapy.current?.destroy();
     };
   });
-  console.log('Rendering AdminPosts', postsForUI);
   return (
     <div className='container'>
       <div className='list-group' ref={container}>
         {postsForUI.map(({ id, title }) => (
-          <ul data-swapy-slot={id} key={id}>
+          <ul data-swapy-slot={id} key={id} className='shadow p-0 rounded'>
             <li
               key={id}
               className='list-group-item d-flex justify-content-between align-items-center'

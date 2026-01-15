@@ -47,7 +47,9 @@ export default async function AdminPage({ searchParams }) {
   return (
     <main className='container'>
       <h1>All posts</h1>
-
+      <p className='opacity-50'>
+        You can change post direction simply by dragging them.
+      </p>
       <AdminPosts
         deletePost={deletePost}
         posts={postsRetrievedForPagination}

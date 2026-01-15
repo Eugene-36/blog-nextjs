@@ -85,7 +85,7 @@ export default async function Home({ searchParams }) {
           )}
 
           <form action='/' method='get'>
-            <div className='mb-3 d-flex'>
+            <div className='mb-3 d-flex shadow'>
               <input
                 name='q'
                 type='text'
@@ -107,7 +107,7 @@ export default async function Home({ searchParams }) {
           )}
           {!totalPosts && <p>No posts found.</p>}
           {!!postsRetrievedForPagination.length && (
-            <ul className='list-group'>
+            <ul className='list-group shadow'>
               {handleUIrender(postsRetrievedForPagination)}
             </ul>
           )}

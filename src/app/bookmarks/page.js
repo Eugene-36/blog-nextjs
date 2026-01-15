@@ -23,7 +23,7 @@ export default async function BookmarkPage() {
         {bookmarks.map((el) => (
           <li
             key={el.id}
-            className='list-group-item d-flex justify-content-between align-items-center'
+            className='list-group-item d-flex justify-content-between align-items-center shadow'
           >
             <Link href={`/posts/${el.post.id}`}>{el.post.title}</Link>
             <small className='text-muted'>
