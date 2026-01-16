@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation';
 import { pagination } from '@/utils/pagination';
 import Pagination from '@/components/Pagination/Pagination.jsx';
 import { Gnews } from '@/components/Gnews/Gnews';
+import { QuoteOfTheDay } from '@/components/QuoteOfTheDay/QuoteOfTheDay';
 
 export default async function Home({ searchParams }) {
   const { q, page } = await searchParams;
@@ -118,6 +119,7 @@ export default async function Home({ searchParams }) {
             searchedWord={searchedWord}
             basePath='/'
           />
+          <QuoteOfTheDay />
         </div>
       </div>
     </main>
