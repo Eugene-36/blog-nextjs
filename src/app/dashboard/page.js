@@ -22,7 +22,7 @@ export default async function DashboardPage() {
   });
 
   return (
-    <main className='container'>
+    <main className='container pt-4'>
       <div className='d-flex justify-content-between align-items-center mb-3'>
         <h1 className='mb-0'>My Posts</h1>
         <Link className='btn btn-primary' href='/posts/new'>

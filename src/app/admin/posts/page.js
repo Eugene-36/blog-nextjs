@@ -27,7 +27,7 @@ export default async function AdminPage({ searchParams }) {
   const { offset, totalPages } = pagination(
     currentPage,
     paginationLimit,
-    totalPosts
+    totalPosts,
   );
   if (currentPage > totalPages) handleEdgeCasesForPagination();
   const postsRetrievedForPagination = await prisma.post.findMany({
@@ -45,7 +45,7 @@ export default async function AdminPage({ searchParams }) {
   if (!session?.user) redirect('/login');
 
   return (
-    <main className='container'>
+    <main className='container pt-4'>
       <h1>All posts</h1>
       <p className='opacity-50'>
         You can change post direction simply by dragging them.

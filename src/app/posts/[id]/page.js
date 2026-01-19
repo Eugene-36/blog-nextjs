@@ -27,7 +27,7 @@ export default async function PostView({ params }) {
   }
 
   return (
-    <main className='container'>
+    <main className='container pt-4'>
       <div className='card p-2' style={{ width: '18rem' }}>
         <h1 className='text-4xl font-bold mb-4'>{post.title}</h1>
         <p className='text-muted mb-4'>

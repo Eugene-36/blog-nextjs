@@ -12,7 +12,7 @@ export default async function AdminPage() {
   const users = await prisma.user.findMany();
   users.forEach((user) => user.role === 'ADMIN' && adminCount++);
   return (
-    <main className='container'>
+    <main className='container pt-4'>
       <h1>Check admin panel</h1>
       <table className='table table-hover'>
         <thead>

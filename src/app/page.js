@@ -29,7 +29,7 @@ export default async function Home({ searchParams }) {
   const { totalPages, offset } = pagination(
     currentPage,
     paginationLimit,
-    totalPosts
+    totalPosts,
   );
 
   if (totalPages === 0) {
@@ -64,7 +64,7 @@ export default async function Home({ searchParams }) {
     ));
   };
   return (
-    <main className='container'>
+    <main className='container pt-4'>
       <div className='row'>
         <div
           className={`${styles.customMask} col-2 overflow-auto`}

@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavItems from '@/components/Nav/Nav.jsx';
 import ToastFromQuery from '@/components/ToastFromQuery/ToastFromQuery.jsx';
 import { Toaster } from 'react-hot-toast';
+import BootstrapClient from '@/components/BootstrapClient/BootstrapClient.jsx';
 // import { Gnews } from '@/components/Gnews/Gnews';
 
 // const geistSans = Geist({
@@ -34,9 +35,10 @@ export default async function RootLayout({ children }) {
   return (
     <html lang='en' data-scroll-behavior='smooth'>
       <body style={bodyStyle} className='bgGradient'>
-        <header>
+        <header className='bg-body-tertiary'>
           <NavItems session={session} logoutAction={logoutAction} />
         </header>
+        <BootstrapClient />
         {children}
         <ToastFromQuery />
         <Toaster position='top-right' />

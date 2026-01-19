@@ -7,11 +7,6 @@ export function AdminPosts({ posts, deletePost, currentPage }) {
   const swapy = useRef(null);
   const container = useRef(null);
 
-  const imagePlaceholder = 'http://google/com'.startsWith('http')
-    ? 'http://google/com'.replace('http://', 'https://')
-    : '/image-not-found.png';
-  console.log('imagePlaceholder', imagePlaceholder);
-  console.log('dasdas', 'http://google/com'.startsWith('http'));
   useEffect(() => {
     if (!posts || posts.length === 0) return;
     let savedOrder = JSON.parse(localStorage.getItem(currentPage) || '[]');

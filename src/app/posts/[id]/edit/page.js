@@ -16,7 +16,7 @@ export default async function EditView({ params }) {
   if (!post || post.authorId !== me.id) redirect('/login');
 
   return (
-    <main className='container'>
+    <main className='container pt-4'>
       <EditPostForm id={id} post={post} />
     </main>
   );
