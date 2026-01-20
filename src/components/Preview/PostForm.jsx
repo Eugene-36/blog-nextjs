@@ -26,7 +26,7 @@ const PostForm = () => {
             type='text'
             id='title'
             name='title'
-            className='form-control'
+            className='form-control shadow'
             required
           />
         </div>
@@ -36,7 +36,7 @@ const PostForm = () => {
           </label>
 
           <textarea
-            className='form-control'
+            className='form-control shadow'
             placeholder='Leave your post content here'
             id='floatingTextarea2'
             style={{ height: '200px' }}
@@ -49,7 +49,7 @@ const PostForm = () => {
             File input
           </label>
           <input
-            className='form-control'
+            className='form-control shadow'
             type='file'
             id='formFile'
             name='image'

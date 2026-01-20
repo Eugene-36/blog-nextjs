@@ -3,7 +3,7 @@ import { useState } from 'react';
 import updatePost from '@/app/posts/[id]/edit/action';
 const EditPostForm = ({ id, post }) => {
   const [imgPreview, setImgPreview] = useState(
-    post.imageUrl ? post.imageUrl : null
+    post.imageUrl ? post.imageUrl : null,
   );
   const handleFilePreview = (e) => {
     setImgPreview(URL.createObjectURL(e.target.files[0]));
@@ -18,7 +18,7 @@ const EditPostForm = ({ id, post }) => {
           <input
             type='text'
             name='title'
-            className='form-control'
+            className='form-control shadow'
             required
             defaultValue={post.title}
           />
@@ -28,7 +28,7 @@ const EditPostForm = ({ id, post }) => {
           <textarea
             type='text'
             name='content'
-            className='form-control'
+            className='form-control shadow'
             id='content'
             rows='3'
             defaultValue={post.content}
@@ -39,7 +39,7 @@ const EditPostForm = ({ id, post }) => {
             File input
           </label>
           <input
-            className='form-control'
+            className='form-control shadow'
             type='file'
             id='formFile'
             name='image'
