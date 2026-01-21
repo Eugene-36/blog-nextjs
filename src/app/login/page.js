@@ -4,6 +4,8 @@ import { useState } from 'react';
 
 export default function LoginPage() {
   const [error, setError] = useState('');
+  const [session, setSession] = useState(null);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -48,6 +50,9 @@ export default function LoginPage() {
           Sign in
         </button>
       </form>
+      {session && (
+        <p className='text-success mt-2'>Logged in as {session.user.email}</p>
+      )}
       {error && <p className='text-danger mt-2'>{error}</p>}
       <p className='mt-2'>
         No account? <a href='/register'>Register</a>
