@@ -1,6 +1,7 @@
 'use client';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
+import GoogleLoginButton from '@/components/GoogleLoginButton/GoogleLoginButton.jsx';
 
 export default function LoginPage() {
   const [error, setError] = useState('');
@@ -54,6 +55,7 @@ export default function LoginPage() {
         <p className='text-success mt-2'>Logged in as {session.user.email}</p>
       )}
       {error && <p className='text-danger mt-2'>{error}</p>}
+      <GoogleLoginButton />
       <p className='mt-2'>
         No account? <a href='/register'>Register</a>
       </p>

@@ -79,8 +79,18 @@ const NavItems = ({ session, logoutAction }) => {
                     </Link>
                   </li>
                   <div className='d-flex align-items-center ms-lg-auto'>
-                    <span className='me-3'>Hello, {session.user.email}</span>
-                    <form action={logoutAction}>
+                    {/* {console.log('Session in Nav:', session)} */}
+                    <div>
+                      <span className='me-2'>Hello, {session.user.email}</span>
+                      <Image
+                        width={50}
+                        height={50}
+                        className='rounded'
+                        src={session.user.image}
+                        alt='User icon'
+                      />
+                    </div>
+                    <form action={logoutAction} className='ms-2'>
                       <button className='btn btn-danger' type='submit'>
                         Logout
                       </button>

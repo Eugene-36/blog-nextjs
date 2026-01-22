@@ -6,7 +6,7 @@ export function QuoteOfTheDay() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   useEffect(() => {
-    fetch('api/auth/ninjas')
+    fetch('api/ninjas')
       .then((res) => res.json())
       .then((data) => {
         if (data.message) setError(data.message);
