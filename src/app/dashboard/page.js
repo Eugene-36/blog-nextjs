@@ -11,7 +11,6 @@ export default async function DashboardPage() {
 
   const user = await prisma.user.findUnique({
     where: { email: session.user.email },
-    // include: { id: true },
   });
   const posts = await prisma.post.findMany({
     where: { authorId: user.id },
@@ -44,7 +43,6 @@ export default async function DashboardPage() {
               </div>
             </div>
 
-            {/* позже добавим edit */}
             <form action={deletePost} method='post'>
               <input type='hidden' name='id' value={id} />
               <button className='btn btn-outline-danger btn-sm' type='submit'>

@@ -2,6 +2,7 @@
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import GoogleLoginButton from '@/components/GoogleLoginButton/GoogleLoginButton.jsx';
+import GitHubLoginButton from '@/components/GitHubLoginButton/GitHubLoginButton.jsx';
 
 export default function LoginPage() {
   const [error, setError] = useState('');
@@ -56,6 +57,7 @@ export default function LoginPage() {
       )}
       {error && <p className='text-danger mt-2'>{error}</p>}
       <GoogleLoginButton />
+      <GitHubLoginButton />
       <p className='mt-2'>
         No account? <a href='/register'>Register</a>
       </p>
