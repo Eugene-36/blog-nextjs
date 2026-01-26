@@ -37,7 +37,11 @@ export function Gnews() {
     <>
       {articles?.length > 0 &&
         articles.map(({ image, title, url, id }) => (
-          <div key={id} className='card' style={{ marginBottom: '1rem' }}>
+          <div
+            key={id}
+            className='card flex-shrink-0'
+            style={{ marginBottom: '1rem', width: '140px' }}
+          >
             <Image
               width={120}
               height={80}
@@ -52,7 +56,7 @@ export function Gnews() {
               placeholder='empty'
             />
 
-            <div className='card-body p-1'>
+            <div className='card-body p-1 d-flex flex-column justify-content-between'>
               <h5 className='card-title fs-6'>{title}</h5>
               <a
                 href={url}

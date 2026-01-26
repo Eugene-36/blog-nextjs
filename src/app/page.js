@@ -65,14 +65,16 @@ export default async function Home({ searchParams }) {
   };
   return (
     <main className='container pt-4'>
-      <div className='row'>
+      <div className='row flex-column-reverse flex-lg-row'>
         <div
-          className={`${styles.customMask} col-2 overflow-auto`}
+          className={`${styles.customMask} col-12 col-lg-3 col-xl-2 overflow-auto `}
           style={{ maxHeight: '90vh' }}
         >
-          <Gnews />
+          <div className='d-lg-block d-flex gap-3 overflow-x-auto pb-2'>
+            <Gnews />
+          </div>
         </div>
-        <div className='col'>
+        <div className='col-12 col-lg-9 col-xl-10'>
           <div className='d-flex justify-content-between align-items-center mb-3'>
             <h1 className='mb-0'>Posts </h1>
             <Link href='/posts/new' className='btn btn-primary'>

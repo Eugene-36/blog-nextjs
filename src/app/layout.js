@@ -7,6 +7,7 @@ import NavItems from '@/components/Nav/Nav.jsx';
 import ToastFromQuery from '@/components/ToastFromQuery/ToastFromQuery.jsx';
 import { Toaster } from 'react-hot-toast';
 import BootstrapClient from '@/components/BootstrapClient/BootstrapClient.jsx';
+import { headers } from 'next/headers';
 // import { Gnews } from '@/components/Gnews/Gnews';
 
 // const geistSans = Geist({
@@ -28,8 +29,9 @@ const bodyStyle = {
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center',
-  height: '100vh',
+  minHeight: '100vh',
 };
+
 export default async function RootLayout({ children }) {
   const session = await auth();
   return (

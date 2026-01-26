@@ -6,7 +6,6 @@ import GitHubLoginButton from '@/components/GitHubLoginButton/GitHubLoginButton.
 
 export default function LoginPage() {
   const [error, setError] = useState('');
-  const [session, setSession] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +26,7 @@ export default function LoginPage() {
   return (
     <main className='container' style={{ maxWidth: 480, margin: '40px auto' }}>
       <h1 className='mb-4'>Login</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='mb-3'>
         <div className='mb-3'>
           <label className='form-label'>Email</label>
           <input
@@ -52,10 +51,8 @@ export default function LoginPage() {
           Sign in
         </button>
       </form>
-      {session && (
-        <p className='text-success mt-2'>Logged in as {session.user.email}</p>
-      )}
       {error && <p className='text-danger mt-2'>{error}</p>}
+      <p className='mb-2'>You also may sign in with:</p>
       <GoogleLoginButton />
       <GitHubLoginButton />
       <p className='mt-2'>

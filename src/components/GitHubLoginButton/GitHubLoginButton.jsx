@@ -10,7 +10,10 @@ export default function GitHubLoginButton() {
   };
 
   return (
-    <button className='btn btn-danger w-100 mb-3' onClick={handleGitHubSignIn}>
+    <button
+      className='btn btn-danger w-100 mb-3 bg-dark border-0'
+      onClick={handleGitHubSignIn}
+    >
       <i className='bi bi-github me-2'></i> Sign in with GitHub
     </button>
   );

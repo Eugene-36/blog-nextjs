@@ -9,7 +9,7 @@ const NavItems = ({ session, logoutAction }) => {
       <div className='container pt-3 pb-3 d-flex justify-content-between'>
         {/* NEW NAV SIDEBAR */}
         <nav className='navbar navbar-expand-lg bg-body-tertiary p-0 w-100'>
-          <a className='navbar-brand' href='#'>
+          <Link className='navbar-brand' href='/'>
             {/* Offcanvas navbar */}
             <Image
               src='/blog_icon_70.png'
@@ -18,7 +18,7 @@ const NavItems = ({ session, logoutAction }) => {
               height={50}
               objectFit='cover'
             />
-          </a>
+          </Link>
           <button
             className='navbar-toggler'
             type='button'
