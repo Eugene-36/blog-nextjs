@@ -3,16 +3,21 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+// import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 const NavItems = ({ session, logoutAction }) => {
+  const pathname = usePathname();
+  const isActiveLink = (href) => (pathname === href ? 'active' : '');
+  console.log('pathname:', pathname);
   return (
     <>
       <div className='container pt-3 pb-3 d-flex justify-content-between'>
         {/* NEW NAV SIDEBAR */}
-        <nav className='navbar navbar-expand-lg bg-body-tertiary p-0 w-100'>
+        <nav className='navbar navbar-expand-lg bg-body-tertiary p-0 w-100 custom-nav'>
           <Link className='navbar-brand' href='/'>
             {/* Offcanvas navbar */}
             <Image
-              src='/blog_icon_70.png'
+              src='/blog_icon_70_1.png'
               alt='Logo'
               width={50}
               height={50}
@@ -46,7 +51,11 @@ const NavItems = ({ session, logoutAction }) => {
             <ul className='ps-3 ps-lg-0 navbar-nav flex-grow-1'>
               {/* {property}{sides}-{breakpoint}-{size} */}
               <li className='nav-item'>
-                <Link href='/' className='nav-link active' aria-current='page'>
+                <Link
+                  href='/'
+                  className={`nav-link ${isActiveLink('/') ? 'active text-decoration-underline' : ''}`}
+                  aria-current='page'
+                >
                   Home
                 </Link>
               </li>
@@ -54,13 +63,19 @@ const NavItems = ({ session, logoutAction }) => {
               {session?.user?.role === 'ADMIN' && (
                 <>
                   <li className='nav-item'>
-                    <Link className='ms-lg-3 nav-link' href='/admin/users'>
+                    <Link
+                      className={`nav-link ms-lg-3 ${isActiveLink('/admin/users') ? 'active text-decoration-underline' : ''}`}
+                      href='/admin/users'
+                    >
                       Table Users
                     </Link>
                   </li>
 
                   <li className='nav-item'>
-                    <Link className='ms-lg-3 nav-link' href='/admin/posts'>
+                    <Link
+                      className={`nav-link ms-lg-3 ${isActiveLink('/admin/posts') ? 'active text-decoration-underline' : ''}`}
+                      href='/admin/posts'
+                    >
                       Admin posts
                     </Link>
                   </li>
@@ -69,12 +84,18 @@ const NavItems = ({ session, logoutAction }) => {
               {session?.user ? (
                 <>
                   <li className='nav-item ms-lg-3'>
-                    <Link href='/bookmarks' className='nav-link'>
+                    <Link
+                      href='/bookmarks'
+                      className={`nav-link ${isActiveLink('/bookmarks') ? 'active text-decoration-underline' : ''}`}
+                    >
                       Bookmarks
                     </Link>
                   </li>
                   <li className='nav-item ms-lg-3'>
-                    <Link href='/dashboard' className='nav-link'>
+                    <Link
+                      href='/dashboard'
+                      className={`nav-link ${isActiveLink('/dashboard') ? 'active text-decoration-underline' : ''}`}
+                    >
                       Dashboard
                     </Link>
                   </li>
@@ -100,12 +121,18 @@ const NavItems = ({ session, logoutAction }) => {
               ) : (
                 <>
                   <li className='nav-item'>
-                    <Link className='ms-3 nav-link' href='/login'>
+                    <Link
+                      className={`nav-link ms-3 ${isActiveLink('/login') ? 'active text-decoration-underline' : ''}`}
+                      href='/login'
+                    >
                       Login
                     </Link>
                   </li>
                   <li className='nav-item'>
-                    <Link className='ms-3 nav-link' href='/register'>
+                    <Link
+                      className={`nav-link ms-3 ${isActiveLink('/register') ? 'active text-decoration-underline' : ''}`}
+                      href='/register'
+                    >
                       Register
                     </Link>
                   </li>
