@@ -14,39 +14,41 @@ export default async function AdminPage() {
   return (
     <main className='container pt-4'>
       <h1>Check admin panel</h1>
-      <table className='table table-hover'>
-        <thead>
-          <tr className='table-dark'>
-            <th scope='col'>ID</th>
-            <th scope='col'>Email</th>
-            <th scope='col'>Role</th>
-            <th scope='col'>Make ADMIN/USER</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map(({ id, email, role }) => (
-            <tr key={id}>
-              <td className='table-info'>{id}</td>
-              <td className='table-info'>{email}</td>
-              <td className='table-info'>{role}</td>
-              <td className='table-info text-align-center'>
-                <div className='d-flex'>
-                  <form action={updateUserRole}>
-                    <input type='hidden' name='id' value={id} />
-                    <button
-                      type='submit'
-                      className='btn btn-primary'
-                      disabled={adminCount === 1 && role === 'ADMIN'}
-                    >
-                      {role === 'ADMIN' ? 'Make User' : 'Make Admin'}
-                    </button>
-                  </form>
-                </div>
-              </td>
+      <div style={{ overflowX: 'auto' }}>
+        <table className='table table-hover'>
+          <thead>
+            <tr className='table-dark'>
+              <th scope='col'>ID</th>
+              <th scope='col'>Email</th>
+              <th scope='col'>Role</th>
+              <th scope='col'>Make ADMIN/USER</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users.map(({ id, email, role }) => (
+              <tr key={id}>
+                <td className='table-info'>{id}</td>
+                <td className='table-info'>{email}</td>
+                <td className='table-info'>{role}</td>
+                <td className='table-info text-align-center'>
+                  <div className='d-flex'>
+                    <form action={updateUserRole}>
+                      <input type='hidden' name='id' value={id} />
+                      <button
+                        type='submit'
+                        className='btn btn-primary'
+                        disabled={adminCount === 1 && role === 'ADMIN'}
+                      >
+                        {role === 'ADMIN' ? 'Make User' : 'Make Admin'}
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </main>
   );
 }

@@ -6,7 +6,6 @@ export async function getCurrentUser() {
   const me = await prisma.user?.findUnique({
     where: { email: session.user.email },
   });
-  console.log('Current User:', me);
   if (!me) throw new Error('User not found');
   return me;
 }

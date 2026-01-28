@@ -17,7 +17,6 @@ export function AdminPosts({ posts, deletePost, currentPage }) {
     let currentOrder = JSON.parse(localStorage.getItem(currentPage) || '[]');
 
     if (currentOrder.length > 0) {
-      console.log('Setting postsForUI from localStorage order');
       setPostsForUI(() => {
         return currentOrder
           .map((id) => posts.find((post) => post.id === id))
