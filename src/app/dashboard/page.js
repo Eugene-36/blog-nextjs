@@ -32,7 +32,7 @@ export default async function DashboardPage() {
         {posts.map(({ id, title, createdAt }) => (
           <li
             key={id}
-            className='list-group-item d-flex justify-content-between align-items-center gap-2 shadow'
+            className='list-group-item d-flex justify-content-between align-items-center gap-2 shadow mb-2'
           >
             <div className='me-auto'>
               <strong>
