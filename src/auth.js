@@ -62,12 +62,14 @@ export const {
           token.pv = dbUser.permissionsVersion;
         }
       }
+
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.role = token.role;
         session.user.permissionsVersion = token.pv;
+        session.user.userId = token.sub;
       }
       return session;
     },
