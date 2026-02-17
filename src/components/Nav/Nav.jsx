@@ -97,6 +97,14 @@ const NavItems = ({ session, logoutAction }) => {
                       Dashboard
                     </Link>
                   </li>
+                  <li className='nav-item ms-lg-3'>
+                    <Link
+                      href='/dashboard/profile'
+                      className={`nav-link ${isActiveLink('/dashboard/profile')}`}
+                    >
+                      Profile
+                    </Link>
+                  </li>
                   <div className='d-flex align-items-center ms-lg-auto'>
                     <div>
                       <span className='me-2'>Hello, {session.user.email}</span>
